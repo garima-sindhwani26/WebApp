@@ -1,7 +1,7 @@
 
 node {
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
-    def server = Artifactory.server "artifactory"
+    def server = Artifactory.server "artifactory1"
     // Create an Artifactory Maven instance.
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
@@ -12,21 +12,21 @@ node {
         git url: 'https://github.com/garima-sindhwani26/WebApp.git'
     }
     
-    /* stage('Artifactory configuration') {
+     stage('Artifactory configuration') {
         // Tool name from Jenkins configuration
         rtMaven.tool = "maven"
         // Set Artifactory repositories for dependencies resolution and artifacts deployment.
         rtMaven.deployer releaseRepo:'repo1', snapshotRepo:'repo1', server: server
         //rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
     }
-*/
+
     stage('Maven build') {
         buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean -DskipTests install'
     }
 
-   /* stage('Publish build info') {
+    stage('Publish build info') {
         server.publishBuildInfo buildInfo
-    }*/
+    }
     stage('deploy to tomcat'){
         deploy adapters: [tomcat7(credentialsId: 'tomcat-tharun', path: '', url: 'http://34.93.27.202:8080/')], contextPath: '/QAWebapp', onFailure: false, war: '**/*.war'
     
