@@ -11,9 +11,7 @@ node {
     stage('Clone sources') {
         git url: 'https://github.com/garima-sindhwani26/WebApp.git'
     }
-    stage('deploy to tomcat'){
-        deploy adapters: [tomcat7(credentialsId: 'tomcat', path: '', url: 'http://3.18.106.13:8080/')], contextPath: '/QAWebapp', onFailure: false, war: '*/.war'
-    }
+    
     stage('Artifactory configuration') {
         // Tool name from Jenkins configuration
         rtMaven.tool = "maven"
@@ -28,6 +26,9 @@ node {
 
     stage('Publish build info') {
         server.publishBuildInfo buildInfo
+    }
+    stage('deploy to tomcat'){
+        deploy adapters: [tomcat7(credentialsId: 'tomcat', path: '', url: 'http://3.18.106.13:8080/')], contextPath: '/QAWebapp', onFailure: false, war: '*/.war'
     }
     }
 	 
