@@ -25,14 +25,7 @@ node {
     }
     
    stage('Build') {
-   steps {
-echo 'Building...'
-}
-post {
-always {
-jiraSendBuildInfo site: 'devopsbootcamp.atlassian.net'
-}
-}
+   jiraSendBuildInfo branch: 'master', site: 'devopsbootcamp.atlassian.net'
 } 
 
     stage('Publish build info') {
