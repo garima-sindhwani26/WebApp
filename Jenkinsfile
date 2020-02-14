@@ -23,6 +23,17 @@ node {
     stage('Maven build') {
         buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean -DskipTests install'
     }
+    
+   stage('Build') {
+   steps {
+echo 'Building...'
+}
+post {
+always {
+jiraSendBuildInfo site: 'devopsbootcamp.atlassian.net'
+}
+}
+} 
 
     stage('Publish build info') {
         server.publishBuildInfo buildInfo
@@ -31,4 +42,5 @@ node {
         deploy adapters: [tomcat7(credentialsId: 'tomcat-tharun', path: '', url: 'http://34.93.27.202:8080/')], contextPath: '/QAWebapp', onFailure: false, war: '**/*.war'
     
     }
+
 }
