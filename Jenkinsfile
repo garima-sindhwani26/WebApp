@@ -24,11 +24,11 @@ node {
         buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean -DskipTests install'
     }
 
-    stage('Publish build info') {
+   /* stage('Publish build info') {
         server.publishBuildInfo buildInfo
-    }
+    }*/
     stage('deploy to tomcat'){
-        deploy adapters: [tomcat7(credentialsId: 'tomcat', path: '', url: 'http://3.18.106.13:8080/')], contextPath: '/QAWebapp', onFailure: false, war: '*/.war'
+        deploy adapters: [tomcat7(credentialsId: 'tomcat', path: '', url: 'http://34.93.27.202:8080/')], contextPath: '/QAWebapp', onFailure: false, war: '**/*.war'
     }
     }
 	 
