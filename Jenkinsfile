@@ -28,7 +28,7 @@ node {
         server.publishBuildInfo buildInfo
     }*/
     stage('deploy to tomcat'){
-        deploy adapters: [tomcat7(credentialsId: 'tomcat', path: '', url: 'http://34.93.27.202:8080/')], contextPath: '/QAWebapp', onFailure: false, war: '**/*.war'
-    }
+        deploy adapters: [tomcat7(credentialsId: 'tomcat-tharun', path: '', url: 'http://34.93.27.202:8080/')], contextPath: '/QAWebapp', onFailure: false, war: '**/*.war'
+    
     }
 	 
